@@ -1,3 +1,17 @@
 spring:
   application:
     name: spicep
+  datasource:
+    url: jdbc:postgresql://localhost:5432/crypto_wallet
+    password: password
+    username: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+job:
+  retrieve-token-price:
+    expression: 0 */2 * ? * *
+    #expression: 0 0 */4 * * ?
+
+coin-cap:
+  url: https://api.coincap.io/v2/
