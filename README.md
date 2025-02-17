@@ -20,5 +20,20 @@ Then, start the application in the IDE or using:
 mvn spring-boot:run
 ```
 
-## Specifics
+## Endpoints
+
+- Create wallet
+```shell
+curl --location 'localhost:8080/api/wallet' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "userEmail": "test@email.com"
+}'
+```
+
+- Get wallet
+```shell
+curl --location 'localhost:8080/api/wallet/{walletId}
+```
+
 

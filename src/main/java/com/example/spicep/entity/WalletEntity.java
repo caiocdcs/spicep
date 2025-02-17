@@ -1,5 +1,6 @@
 package com.example.spicep.entity;
 
+import com.example.spicep.dto.WalletDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,33 +8,35 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "token_price", indexes = { @Index(columnList = "tokenSymbol"), @Index(columnList = "timestamp")})
+@Table(name = "wallet", uniqueConstraints = @UniqueConstraint(columnNames = "userEmail"))
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenPriceEntity {
+public class WalletEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false)
-    private String tokenSymbol;
-
-    @Column(nullable = false, precision = 20, scale = 8)
-    private BigDecimal price;
+    private String userEmail;
 
     @Column(nullable = false)
-    @UpdateTimestamp
-    private Instant timestamp;
+    @CreationTimestamp
+    private Instant createdAt;
+
+    public static WalletDTO toDTO(WalletEntity entity) {
+        return new WalletDTO(entity.getId(), BigDecimal.ZERO);
+    }
 }
