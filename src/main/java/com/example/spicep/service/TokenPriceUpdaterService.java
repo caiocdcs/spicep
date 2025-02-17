@@ -24,13 +24,13 @@ public class TokenPriceUpdaterService {
         try {
             var tokenPrice = tokenPriceService.getTokenPrice(tokenSymbol);
 
-            tokenPrice.ifPresent(this::updateDatabase);
+            tokenPrice.ifPresent(this::saveOrUpdateToken);
         } catch (Exception e) {
             log.error("Error updating token symbol: {}", tokenSymbol, e);
         }
     }
 
-    private void updateDatabase(TokenPrice tokenPrice) {
+    private void saveOrUpdateToken(TokenPrice tokenPrice) {
         var oldToken = tokenPriceRepository.findByTokenSymbol(tokenPrice.symbol());
 
         final var tokenPriceEntity = oldToken.map((tpe) -> {
