@@ -11,5 +11,5 @@ public enum TokenSymbol {
     BCH("bitcoin-cash"),
     EOS("eos");
 
-    private final String name;
+    private final String code;
 }
