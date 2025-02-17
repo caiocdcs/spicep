@@ -1,7 +1,6 @@
 package com.example.spicep.service;
 
 import com.example.spicep.entity.WalletEntity;
-import com.example.spicep.exception.WalletAlreadyExistsException;
 import com.example.spicep.model.Wallet;
 import com.example.spicep.repository.WalletRepository;
 import org.junit.jupiter.api.Test;

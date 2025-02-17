@@ -24,7 +24,7 @@ mvn spring-boot:run
 
 - Create wallet
 ```shell
-curl --location 'localhost:8080/api/wallet' \
+curl --location 'localhost:8080/api/wallets' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "userEmail": "test@email.com"
@@ -33,7 +33,7 @@ curl --location 'localhost:8080/api/wallet' \
 
 - Get wallet
 ```shell
-curl --location 'localhost:8080/api/wallet/{walletId}
+curl --location 'localhost:8080/api/wallets/{walletId}
 ```
 
 

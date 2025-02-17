@@ -2,7 +2,7 @@ package com.example.spicep.service;
 
 import com.example.spicep.entity.TokenPriceEntity;
 import com.example.spicep.model.TokenPrice;
-import com.example.spicep.model.TokenSymbol;
+import com.example.spicep.model.model.TokenSymbol;
 import com.example.spicep.repository.TokenPriceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

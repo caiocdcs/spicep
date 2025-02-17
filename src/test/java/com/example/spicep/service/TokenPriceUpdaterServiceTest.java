@@ -1,7 +1,7 @@
 package com.example.spicep.service;
 
 import com.example.spicep.model.TokenPrice;
-import com.example.spicep.model.TokenSymbol;
+import com.example.spicep.model.model.TokenSymbol;
 import com.example.spicep.repository.TokenPriceRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

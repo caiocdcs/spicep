@@ -30,7 +30,7 @@ public class TokenPriceEntity {
     @Column(nullable = false)
     private String tokenSymbol;
 
-    @Column(nullable = false, precision = 20, scale = 8)
+    @Column(nullable = false, precision = 20, scale = 2)
     private BigDecimal price;
 
     @Column(nullable = false)

@@ -1,6 +1,6 @@
 package com.example.spicep.job;
 
-import com.example.spicep.model.TokenSymbol;
+import com.example.spicep.model.model.TokenSymbol;
 import com.example.spicep.service.TokenPriceUpdaterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

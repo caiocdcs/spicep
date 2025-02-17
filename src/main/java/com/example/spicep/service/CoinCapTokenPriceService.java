@@ -3,7 +3,7 @@ package com.example.spicep.service;
 import com.example.spicep.model.coincap.CoinCapResponse;
 import com.example.spicep.model.coincap.CoinCapToken;
 import com.example.spicep.model.TokenPrice;
-import com.example.spicep.model.TokenSymbol;
+import com.example.spicep.model.model.TokenSymbol;
 import io.github.resilience4j.bulkhead.BulkheadFullException;
 import io.github.resilience4j.bulkhead.annotation.Bulkhead;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.example.spicep.model;
+package com.example.spicep.model.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
