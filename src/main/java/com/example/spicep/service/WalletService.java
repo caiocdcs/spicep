@@ -21,7 +21,7 @@ public class WalletService {
         var currentWallet = walletRepository.findByUserEmail(wallet.userEmail());
 
         if (currentWallet.isPresent()) {
-            throw new WalletAlreadyExistsException();
+            throw new WalletAlreadyExistsException("Email already has a wallet");
         }
 
         var newWallet = createNewWallet(wallet);
