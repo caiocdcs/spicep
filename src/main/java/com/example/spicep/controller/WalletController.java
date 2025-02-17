@@ -5,6 +5,7 @@ import com.example.spicep.model.Wallet;
 import com.example.spicep.service.WalletService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +25,7 @@ public class WalletController {
 
     @PostMapping
     public ResponseEntity<WalletDTO> createNewWallet(@Valid @RequestBody Wallet wallet) {
-        return ResponseEntity.ok(walletService.createWallet(wallet));
+        return ResponseEntity.status(HttpStatus.CREATED).body(walletService.createWallet(wallet));
     }
 
     @GetMapping("/{walletId}")
