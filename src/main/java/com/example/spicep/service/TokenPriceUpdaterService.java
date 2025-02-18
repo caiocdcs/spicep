@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -37,13 +35,11 @@ public class TokenPriceUpdaterService {
 
         final var tokenPriceEntity = oldToken.map((tpe) -> {
             tpe.setPrice(tokenPrice.price());
-            tpe.setTimestamp(Instant.now());
             return tpe;
         }).orElseGet(() -> {
             var tpe = new TokenPriceEntity();
             tpe.setTokenSymbol(tokenPrice.symbol());
             tpe.setPrice(tokenPrice.price());
-            tpe.setTimestamp(Instant.now());
             return tpe;
         });
 
