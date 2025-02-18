@@ -9,6 +9,7 @@ public enum TokenSymbol {
     BTC("bitcoin"),
     ETH("ethereum"),
     BCH("bitcoin-cash"),
+    BNB("binance-coin"),
     EOS("eos");
 
     private final String code;
