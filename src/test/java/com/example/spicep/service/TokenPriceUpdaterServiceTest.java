@@ -30,12 +30,11 @@ public class TokenPriceUpdaterServiceTest {
 
     @Test
     public void testUpdateTokenPrice() {
-        var symbol = "BTC";
         var tokenSymbol = TokenSymbol.BTC;
-        var tokenPrice = new TokenPrice(symbol, BigDecimal.ONE);
+        var tokenPrice = new TokenPrice(tokenSymbol, BigDecimal.ONE);
 
         when(tokenPriceService.getTokenPrice(tokenSymbol)).thenReturn(Optional.of(tokenPrice));
-        when(tokenPriceRepository.findByTokenSymbol(symbol)).thenReturn(Optional.empty());
+        when(tokenPriceRepository.findByTokenSymbol(TokenSymbol.BTC)).thenReturn(Optional.empty());
 
         tokenPriceUpdaterService.updateToken(tokenSymbol);
 

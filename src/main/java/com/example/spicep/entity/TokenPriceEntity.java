@@ -1,7 +1,10 @@
 package com.example.spicep.entity;
 
+import com.example.spicep.model.model.TokenSymbol;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,7 +31,8 @@ public class TokenPriceEntity {
     private UUID id;
 
     @Column(nullable = false)
-    private String tokenSymbol;
+    @Enumerated(value = EnumType.STRING)
+    private TokenSymbol tokenSymbol;
 
     @Column(nullable = false, precision = 20, scale = 2)
     private BigDecimal price;
