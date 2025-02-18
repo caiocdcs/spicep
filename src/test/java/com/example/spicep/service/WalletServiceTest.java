@@ -1,10 +1,14 @@
 package com.example.spicep.service;
 
+import com.example.spicep.entity.TokenAssetEntity;
 import com.example.spicep.entity.WalletEntity;
 import com.example.spicep.exception.BusinessException;
+import com.example.spicep.model.Asset;
 import com.example.spicep.model.TokenPrice;
 import com.example.spicep.model.Wallet;
 import com.example.spicep.model.model.ErrorCode;
+import com.example.spicep.model.model.TokenSymbol;
+import com.example.spicep.repository.TokenAssetRepository;
 import com.example.spicep.repository.WalletRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +36,9 @@ public class WalletServiceTest {
 
     @Mock
     private WalletRepository walletRepository;
+
+    @Mock
+    private TokenAssetRepository tokenAssetRepository;
 
     @Mock
     private TokenPriceService tokenPriceService;
@@ -68,5 +75,58 @@ public class WalletServiceTest {
 
         verify(walletRepository, times(1)).findByUserEmail(USER_EMAIL);
         verify(walletRepository, times(0)).save(any(WalletEntity.class));
+    }
+
+    @Test
+    public void testAddAssetToWallet() {
+        var walletId = UUID.randomUUID();
+        var walletEntity = new WalletEntity(walletId, USER_EMAIL, Instant.now(), List.of());
+        var tokenPrice = new TokenPrice(TokenSymbol.BTC, BigDecimal.ONE);
+
+        var asset = new Asset(TokenSymbol.BTC, BigDecimal.ONE, BigDecimal.ONE);
+
+        when(tokenPriceService.getTokenPrice(TokenSymbol.BTC)).thenReturn(Optional.of(tokenPrice));
+        when(walletRepository.findById(walletId)).thenReturn(Optional.of(walletEntity));
+
+        walletService.addAsset(walletId, asset);
+
+        verify(tokenPriceService, times(1)).getTokenPrice(TokenSymbol.BTC);
+        verify(walletRepository, times(1)).findById(walletId);
+        verify(tokenAssetRepository, times(1)).save(any(TokenAssetEntity.class));
+    }
+
+    @Test
+    public void testAddAssetToWalletNotFound() {
+        var walletId = UUID.randomUUID();
+        var tokenPrice = new TokenPrice(TokenSymbol.BTC, BigDecimal.ONE);
+
+        var asset = new Asset(TokenSymbol.BTC, BigDecimal.ONE, BigDecimal.ONE);
+
+        when(tokenPriceService.getTokenPrice(TokenSymbol.BTC)).thenReturn(Optional.of(tokenPrice));
+        when(walletRepository.findById(walletId)).thenReturn(Optional.empty());
+
+        var exception = catchThrowableOfType(() -> walletService.addAsset(walletId, asset), BusinessException.class);
+        assertThat(exception).isNotNull();
+        assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.WALLET_DOES_NOT_EXIST);
+
+        verify(tokenPriceService, times(1)).getTokenPrice(TokenSymbol.BTC);
+        verify(walletRepository, times(1)).findById(walletId);
+        verify(tokenAssetRepository, times(0)).save(any(TokenAssetEntity.class));
+    }
+
+    @Test
+    public void testAddAssetToWalletTokenPriceNotFound() {
+        var walletId = UUID.randomUUID();
+        var asset = new Asset(TokenSymbol.BTC, BigDecimal.ONE, BigDecimal.ONE);
+
+        when(tokenPriceService.getTokenPrice(TokenSymbol.BTC)).thenReturn(Optional.empty());
+
+        var exception = catchThrowableOfType(() -> walletService.addAsset(walletId, asset), BusinessException.class);
+        assertThat(exception).isNotNull();
+        assertThat(exception.getErrorCode()).isEqualTo(ErrorCode.TOKEN_PRICE_DOES_NOT_EXIST);
+
+        verify(tokenPriceService, times(1)).getTokenPrice(TokenSymbol.BTC);
+        verify(walletRepository, times(0)).findById(walletId);
+        verify(tokenAssetRepository, times(0)).save(any(TokenAssetEntity.class));
     }
 }
