@@ -44,10 +44,10 @@ public class WalletEvaluationService {
         var historicalPrice = tokenHistory.get().price();
         var total = asset.quantity().multiply(historicalPrice).setScale(2, RoundingMode.HALF_UP);
 
-        var currentPrice = asset.value().divide(asset.quantity(), RoundingMode.HALF_UP);
+        var price = asset.value().divide(asset.quantity(), RoundingMode.HALF_UP);
 
-        var performance = historicalPrice.subtract(currentPrice)
-                .divide(historicalPrice, 4, RoundingMode.HALF_UP)
+        var performance = historicalPrice.subtract(price)
+                .divide(price, 4, RoundingMode.HALF_UP)
                 .multiply(BigDecimal.valueOf(100));
 
         var assetPerformance = new AssetPerformance(asset.symbol(), total, performance.doubleValue());

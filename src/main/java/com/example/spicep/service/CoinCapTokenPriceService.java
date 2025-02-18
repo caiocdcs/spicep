@@ -63,8 +63,8 @@ public class CoinCapTokenPriceService implements TokenPriceService {
     public Optional<TokenPrice> getHistoricalTokenPrice(TokenSymbol symbol, LocalDate date) {
         log.info("Getting token price history for symbol {} on {}", symbol, date);
 
-        final long start = date.minusDays(1).atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
-        final long end = date.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
+        final long start = date.atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli();
+        final long end = date.atStartOfDay().plusDays(1).toInstant(ZoneOffset.UTC).toEpochMilli();
 
         var response = restClient.get()
                 .uri(uriBuilder -> uriBuilder
