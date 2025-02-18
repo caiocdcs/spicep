@@ -36,4 +36,36 @@ curl --location 'localhost:8080/api/wallets' \
 curl --location 'localhost:8080/api/wallets/{walletId}
 ```
 
+- Add asset to wallet
+```shell
+curl --location 'localhost:8080/api/wallets/{walletId}/assets' \
+--header 'Content-Type: application/json' \
+--data '{
+    "symbol": "BTC",
+    "quantity": 1.5,
+    "price": 100000.00
+}'
+```
+
+- Wallet evaluation
+```shell
+curl --location 'localhost:8080/api/wallets/evaluate' \
+--header 'Content-Type: application/json' \
+--data '{
+    "evaluation_date": "2025-01-07",
+    "assets": [
+        {
+            "symbol": "BTC",
+            "quantity": 0.5,
+            "value": 35000
+        },
+        {
+            "symbol": "ETH",
+            "quantity": 4.25,
+            "value": 15310.71
+        }
+    ]
+}'
+```
+
 
