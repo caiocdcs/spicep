@@ -10,7 +10,7 @@ spring:
       ddl-auto: update
 job:
   retrieve-token-price:
-    expression: 0 0 */4 * * ?
+    expression: 0 0 */4 * * ? # every 4 hours
 
 coin-cap:
   url: https://api.coincap.io/v2/

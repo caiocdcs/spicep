@@ -3,6 +3,7 @@ package com.example.spicep.service;
 import com.example.spicep.entity.TokenPriceEntity;
 import com.example.spicep.model.TokenPrice;
 import com.example.spicep.model.model.TokenSymbol;
+import com.example.spicep.repository.TokenAssetRepository;
 import com.example.spicep.repository.TokenPriceRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +19,7 @@ public class TokenPriceUpdaterService {
 
     private final TokenPriceRepository tokenPriceRepository;
     private final TokenPriceService tokenPriceService;
+    private final TokenAssetRepository tokenAssetRepository;
 
     @Async
     public void updateToken(TokenSymbol tokenSymbol) {
@@ -30,7 +32,7 @@ public class TokenPriceUpdaterService {
         }
     }
 
-    private void saveOrUpdateToken(TokenPrice tokenPrice) {
+    public void saveOrUpdateToken(TokenPrice tokenPrice) {
         var oldToken = tokenPriceRepository.findByTokenSymbol(tokenPrice.symbol());
 
         final var tokenPriceEntity = oldToken.map((tpe) -> {
@@ -46,5 +48,8 @@ public class TokenPriceUpdaterService {
         });
 
         tokenPriceRepository.save(tokenPriceEntity);
+
+        tokenAssetRepository
+                .updatePrice(tokenPrice.price(), tokenPrice.symbol());
     }
 }
